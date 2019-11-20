@@ -48,21 +48,7 @@ function createButtons() {
   document.getElementById('Magic').addEventListener('click', magic);
 }
 
-magic = () => {
-  cardsWrapper.innerHTML = '';
-  state.cards.sort((a, b) => (a.value > b.value ? 1 : -1));
-  generateCards();
-};
-
-show = () => {
-  cardsWrapper.innerHTML = '';
-  state.cards.forEach(card => {
-    hiddenCard = document.createElement('div');
-    hiddenCard.innerHTML = `<p class='hiddenCard'>This is a hidden card</p>`;
-    cardsWrapper.append(hiddenCard);
-  });
-};
-
+// clear the cards wrapper then randomly shuffle the cards and then show them after they have been shuffled
 shuffle = () => {
   cardsWrapper.innerHTML = '';
   for (let i = 0; i < state.cards.length; i++) {
@@ -70,6 +56,43 @@ shuffle = () => {
     let temp = state.cards[i];
     state.cards[i] = state.cards[j];
     state.cards[j] = temp;
+  }
+  generateCards();
+};
+
+//hide/show cards dependent on current state
+show = () => {
+  const hideCards = document.querySelector('.cards-wrapper');
+  hideCards.classList.toggle('hidden');
+};
+
+// clear the cardsWrapper and then sort the cards by value 1 through 13 for each suit
+// call function creating a new bonus button for reverse magic
+magic = () => {
+  cardsWrapper.innerHTML = '';
+  state.cards.sort((cardA, cardB) => (cardA.value > cardB.value ? 1 : -1));
+  generateCards();
+  createReverseMagicButton();
+};
+
+createReverseMagicButton = () => {
+  if (document.getElementById('reverseMagic')) {
+  } else {
+    const btnWrapper = document.querySelector('.btn-wrapper');
+    const extraButtonElement = document.createElement('button');
+    extraButtonElement.innerHTML = 'Reverse Magic';
+    extraButtonElement.setAttribute('id', 'reverseMagic');
+    extraButtonElement.classList.add('btn', 'btn-lg', 'bg-secondary');
+    btnWrapper.append(extraButtonElement);
+    document
+      .getElementById('reverseMagic')
+      .addEventListener('click', reverseMagic);
+  }
+};
+
+reverseMagic = () => {
+  for (let i = 0; i < state.cards.length - 1; i++) {
+    state.cards.splice(i, 0, state.cards.pop());
   }
   generateCards();
 };

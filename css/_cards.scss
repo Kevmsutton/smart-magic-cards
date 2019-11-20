@@ -173,11 +173,12 @@
     }
   }
 
-  .hidden {
-    background: rgb(0, 212, 255);
-    background: radial-gradient(circle, #00d4ff 0%, #090979 65%, #020024 97%);
-    border: 1px solid;
-    border-radius: 10px;
-    z-index: 90;
+  &.hidden {
+    .card {
+      // background: rgb(0, 212, 255) !important;
+      background: radial-gradient(circle, #00d4ff 0%, #090979 65%, #020024 97%);
+      border: 1px solid;
+      border-radius: 10px;
+    }
   }
 }
